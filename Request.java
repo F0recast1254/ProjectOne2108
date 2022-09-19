@@ -1,7 +1,11 @@
 public class Request {
     String ID;
     long arrivalTime;
-    double Priority;
+    double priority;
     Request(){}
-    Request(String ID, long arrivalTime, double priority){}
+    Request(String ID, long arrivalTime, double priority){
+        this.ID = ID;
+        this.arrivalTime = arrivalTime;
+        this.priority = priority; 
+    }
 }
