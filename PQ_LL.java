@@ -1,15 +1,20 @@
-//import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class PQ_LL {
 
     Request head;
     Request tVrsr;
+
+    //Collection<? extends Request>NewList;
+
     public PQ_LL(){
-        head = null;
+        head = new Request();
     }
-    /*
-    public PQ_LL(ArrayList<? extends Request> L){
-        head = L.get(0);
-    }*/
+
+    public PQ_LL(Collection<? extends Request> L){
+        head = getIndex(0);
+    }
 
     /**
      * Method to traverse through linked list uses tVrsr field to track position.
@@ -17,8 +22,19 @@ public class PQ_LL {
     public void traverse(){
         tVrsr = head;
         while(tVrsr.next != null){
+            tVrsr.print();
             tVrsr = tVrsr.next;
         }
+    }
+
+    public int size(){
+        int x = 0;
+        tVrsr = head;
+        while(tVrsr.next != null) {
+            x++;
+            tVrsr = tVrsr.next;
+        }
+        return x;
     }
 
     /**
@@ -35,7 +51,7 @@ public class PQ_LL {
      * @param newR takes a Request object
      */
     public void addLast(Request newR){
-        if(head == null){
+        if(head.next == null){
             addFirst(newR);
         }else{
             traverse();
@@ -72,7 +88,9 @@ public class PQ_LL {
         int i;
         tVrsr = head;
         for(i=0; i<x; i++){
-            tVrsr = tVrsr.next;
+            if(tVrsr.next == null) {
+                return tVrsr;
+            }else tVrsr = tVrsr.next;
         }
         return tVrsr;
     }
