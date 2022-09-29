@@ -43,8 +43,7 @@ public class PQ_LL {
 
         //read line by line
         //use split(" ") , which creates an array index 0 will be the id etc
-        System.out.println("start");
-
+     
         BufferedReader reader = null;
         try {
             String currentLine;
