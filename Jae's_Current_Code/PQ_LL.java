@@ -132,7 +132,7 @@ public class PQ_LL {
             }
 
             //this gets triggered when t.p == c.p
-            if(temp.getPriority() == current.getPriority() )    {
+        if(temp.getPriority() == current.getPriority() )    {
                 //exits when t.a <c.a
                while(temp.getPriority()== current.getPriority() && temp.getArrivalTime()>current.getArrivalTime()){
                   current = current.next;
@@ -150,100 +150,7 @@ public class PQ_LL {
                }
             }
 
-
 return head;
-
-
-
-
-
-
-
-
-
-        /*
-        //for this to work ll must be already in order
-        //if head is the end then addFirst or if temp priority is greater than head priority addFirst
-       if(head == null || temp.getPriority()>head.getPriority()  ){
-           addFirst(temp);
-           return head;
-       }
-
-       Request current = head;
-       int count = 0 ;
-
-       //loop ends when temp.prio is larger than current.prio or its equal
-       //if linkedlist is sorted then current will equal null when the loop ends
-       while(current != null && temp.getPriority() < current.getPriority() ){
-           current = current.next;
-           count++ ;
-       }
-       if(temp.getPriority() > current.getPriority()){
-          temp.next = current;
-          getNode(count-1).next = temp;
-       }
-
-
-       //this gets triggered if list is sorted and add to end
-       if(current== null){
-          addLast(temp);
-          //reset counter
-          count = 0 ;
-          //assign current to head. reset
-          current = head;
-          return head;
-       }
-
-       //if temp.prio and curr.prio are equal this gets triggeredisplayNoded
-        // this will accounts for the arrivaltimes and insert at the right places after looking at all the arrivaltimes that has the same priorities
-       if(temp.getPriority() == current.getPriority() ){
-           // current.prio is equal to temp.prio
-           while(current.next != null && temp.getPriority() == current.getPriority()&&temp.getArrivalTime()>current.getArrivalTime()){
-               //curr becomes null here
-               current= current.next;
-               count++;
-           }
-           if(temp.getPriority() == current.getPriority() && temp.getArrivalTime()== current.getArrivalTime()){
-              temp.next = current.next;
-              current.next = temp;
-              return head;
-
-           }
-
-
-           //insert after curr
-           //if arrivaltime is the largest in the same priority nodes
-           if(temp.getPriority() != current.getPriority()){
-              temp.next = current;
-              getNode(count-1).next = temp;
-              return head;
-           }
-           else if( temp.getArrivalTime()<current.getArrivalTime()){
-               //when loop ends curr.arrival is greater than temp.arrival
-               //so insert temp before curr bc temp.arrival is less then curr.arrival
-
-               if(current==head){
-                addFirst(temp);
-                return head;
-               }
-               temp.next = current;
-
-               getNode(count - 1).next = temp;
-               return head;
-           }
-           else if(temp.getArrivalTime()>current.getArrivalTime()){
-              temp.next = current.next;
-              current.next = temp;
-              return head;
-           }
-
-
-       }
-
-
-return head;
-
-         */
 
         }
 
@@ -287,18 +194,6 @@ return head;
     }
 
 
-
-   /**
-     * This version of this method adds newR at the index param
-     * @param index takes an int
-     * @param newR takes a Request object
-     */
-    public void add(int index, Request newR) {
-        Request pre = getNode(index - 1);
-        newR.next = pre.next;
-        pre.next = newR;
-    }
-
     /**
      * This method gets the Request object at the specified location using the tVrsr field.
      * @param x takes an int
@@ -328,95 +223,7 @@ return head;
         Request temp = head;
         //cant get last node
         //want to stop before tVrsr becomes null
-        while(temp != null){import java.io.*;
-2
-​
-3
-public class PQ_LL {
-4
-​
-5
-    Request head;
-6
-    Request tVrsr;
-7
-​
-8
-    public PQ_LL(){
-9
-        head = null;
-10
-    }
-11
-​
-12
-    Request getHead (){
-13
-        return head;a
-14
-    }
-15
-​
-16
-    Request searchId (String id) {
-17
-        Request walker = head;
-18
-        Request ans = null ;
-19
-        while (walker != null) {
-20
-            if (walker.getID().equals(id)) {
-21
-                ans =  walker;
-22
-            }
-23
-            walker = walker.next;
-24
-        }
-25
-        return ans;
-26
-    }
-27
-​
-28
-    Request searchPriority(double priority){
-29
-        Request walker = head;
-30
-        Request ans = null;
-31
-        while (walker != null) {
-32
-            if (walker.getPriority() == priority)
-33
-            {
-34
-                ans = walker;
-35
-            }
-36
-            walker = walker.next;
-37
-​
-38
-        }
-39
-        return ans;
-40
-    }
-41
-​
-42
-    void readFile(){
-43
-​
-44
-        //read line by line
-45
-        //use split(" ") , which creates an array index 0 will be the id etc
+        while(temp != null){
             linkedlist += temp.toString();
             temp = temp.next;
 
