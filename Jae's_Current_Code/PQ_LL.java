@@ -43,7 +43,7 @@ public class PQ_LL {
 
         //read line by line
         //use split(" ") , which creates an array index 0 will be the id etc
-     
+
         BufferedReader reader = null;
         try {
             String currentLine;
@@ -137,11 +137,19 @@ public class PQ_LL {
                current= current.next;
                count++;
            }
+           if(temp.getPriority() == current.getPriority() && temp.getArrivalTime()== current.getArrivalTime()){
+              temp.next = current.next;
+              current.next = temp;
+              return head;
+
+           }
+
+
            //insert after curr
            //if arrivaltime is the largest in the same priority nodes
            if(temp.getPriority() != current.getPriority()){
-              temp.next = current.next;
-              current.next = temp;
+              temp.next = current;
+              getNode(count-1).next = temp;
               return head;
            }
            else if( temp.getArrivalTime()<current.getArrivalTime()){
@@ -165,13 +173,6 @@ public class PQ_LL {
 
        }
 
-       //if temp and curr not equal then insert temp before curr
-       else{
-            getNode(count-1).next = temp;
-            temp.next = current;
-
-          return head;
-       }
 
 return head;
 
