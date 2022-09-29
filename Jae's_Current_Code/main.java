@@ -11,22 +11,6 @@ public class main {
         Scanner s =  new Scanner(System.in);
         int Menunumber = 0;
         String menu = "Displaying menu\n1: Display current Requests\n2: Create new Request\n3: Search\n4: Delete a Request\n5: Serve a Request\n6: Change Request Priority\n7: Save\n8: Exit";
-        //System.out.println("before");
-10
-        //ll.display();
-11
-​
-12
-        //ll.sortLinkedList();
-13
-​
-14
-        //System.out.println("after");
-15
-        //ll.display();
-16
-​
-17
 
 
         while (Menunumber!=8) {
