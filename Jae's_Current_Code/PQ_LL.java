@@ -68,6 +68,7 @@ public class PQ_LL {
             }
         }
         catch (Exception e){
+            System.out.println(e);
         }
     }
 
@@ -119,13 +120,13 @@ public class PQ_LL {
             count++;
         }
             //if temp prio bigger than curr prio then insert temp before curr
-            if( temp.getPriority()> current.getPriority()){
+            if( temp.getPriority() != current.getPriority() &&temp.getPriority()> current.getPriority()){
                 temp.next = current;
                 getNode(count-1).next = temp;
                 return head;
             }
             //insert after
-            else if (temp.getPriority()< current.getPriority() ){
+            else if (temp.getPriority() != current.getPriority() &&temp.getPriority()< current.getPriority() ){
                  temp.next = current.next;
                  current.next = temp;
                  return head;
@@ -134,7 +135,7 @@ public class PQ_LL {
             //this gets triggered when t.p == c.p
         if(temp.getPriority() == current.getPriority() )    {
                 //exits when t.a <c.a
-               while(temp.getPriority()== current.getPriority() && temp.getArrivalTime()>current.getArrivalTime()){
+               while(current.next != null && temp.getPriority()== current.getPriority() && temp.getArrivalTime()>current.getArrivalTime()){
                   current = current.next;
                   count++;
                }
@@ -147,6 +148,11 @@ public class PQ_LL {
                else if(temp.getPriority()== current.getPriority() && temp.getArrivalTime()<current.getArrivalTime() ){
                    getNode(count-1).next = temp;
                    temp.next = current;
+               }
+               //insert after curr
+               else if(temp.getPriority()== current.getPriority() && temp.getArrivalTime()>current.getArrivalTime() ){
+                   temp.next = current.next;
+                   current.next = temp;
                }
             }
 
