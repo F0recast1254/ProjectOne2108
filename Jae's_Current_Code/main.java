@@ -1,28 +1,32 @@
 import java.util.*;
 import java.io.*;
-// issues:
-// sortedInsert inserts at the first instance after or before an arrivaltime is less or greater than
-// problem with this is if there are more than 2 same priority
-//fix:
-// have sort linkedlist at the end, sort linkedlist should account for multiple arrival times
+
 public class main {
 
     public static void main(String[]args){
         PQ_LL ll = new PQ_LL();
         ll.readFile();
-        //System.out.println("before");
-        //ll.display();
-
-        //ll.sortLinkedList();
-
-        //System.out.println("after");
-        //ll.display();
-
 
 
         Scanner s =  new Scanner(System.in);
         int Menunumber = 0;
         String menu = "Displaying menu\n1: Display current Requests\n2: Create new Request\n3: Search\n4: Delete a Request\n5: Serve a Request\n6: Change Request Priority\n7: Save\n8: Exit";
+        //System.out.println("before");
+10
+        //ll.display();
+11
+​
+12
+        //ll.sortLinkedList();
+13
+​
+14
+        //System.out.println("after");
+15
+        //ll.display();
+16
+​
+17
 
 
         while (Menunumber!=8) {
