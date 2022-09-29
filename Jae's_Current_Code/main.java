@@ -19,7 +19,6 @@ public class main {
             s.nextLine();
             switch (Menunumber) {
                 case 1:
-                    //it displays but not in order
                     ll.display();
                     break;
 
