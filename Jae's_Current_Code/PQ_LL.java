@@ -101,6 +101,67 @@ public class PQ_LL {
 
 
     Request sortedInsert(Request temp){
+        if(head == null || temp.getPriority() >head.getPriority() ) {
+            addFirst(temp);
+            return head;
+        }
+
+        Request current  = head;
+        int count = 0 ;
+
+        // better to have where while loop ends and the current is what you want
+
+
+        //accounts for when t.p < c.p or when t.p> c.p
+        // when it exits either temp.Prio is greater than curr.Prio or temp.P == curr.P
+        while(current.next != null && temp.getPriority() != current.getPriority() && temp.getPriority()< current.getPriority()) {
+            current = current.next;
+            count++;
+        }
+            //if temp prio bigger than curr prio then insert temp before curr
+            if( temp.getPriority()> current.getPriority()){
+                temp.next = current;
+                getNode(count-1).next = temp;
+                return head;
+            }
+            //insert after
+            else if (temp.getPriority()< current.getPriority() ){
+                 temp.next = current.next;
+                 current.next = temp;
+                 return head;
+            }
+
+            //this gets triggered when t.p == c.p
+            if(temp.getPriority() == current.getPriority() )    {
+                //exits when t.a <c.a
+               while(temp.getPriority()== current.getPriority() && temp.getArrivalTime()>current.getArrivalTime()){
+                  current = current.next;
+                  count++;
+               }
+               //insert before curr
+               if(temp.getPriority() != current.getPriority() ){
+                   getNode(count-1).next = temp;
+                   temp.next = current;
+               }
+               //insert before curr
+               else if(temp.getPriority()== current.getPriority() && temp.getArrivalTime()<current.getArrivalTime() ){
+                   getNode(count-1).next = temp;
+                   temp.next = current;
+               }
+            }
+
+
+return head;
+
+
+
+
+
+
+
+
+
+        /*
         //for this to work ll must be already in order
         //if head is the end then addFirst or if temp priority is greater than head priority addFirst
        if(head == null || temp.getPriority()>head.getPriority()  ){
@@ -117,6 +178,11 @@ public class PQ_LL {
            current = current.next;
            count++ ;
        }
+       if(temp.getPriority() > current.getPriority()){
+          temp.next = current;
+          getNode(count-1).next = temp;
+       }
+
 
        //this gets triggered if list is sorted and add to end
        if(current== null){
@@ -171,10 +237,13 @@ public class PQ_LL {
               return head;
            }
 
+
        }
 
 
 return head;
+
+         */
 
         }
 
@@ -259,7 +328,95 @@ return head;
         Request temp = head;
         //cant get last node
         //want to stop before tVrsr becomes null
-        while(temp != null){
+        while(temp != null){import java.io.*;
+2
+​
+3
+public class PQ_LL {
+4
+​
+5
+    Request head;
+6
+    Request tVrsr;
+7
+​
+8
+    public PQ_LL(){
+9
+        head = null;
+10
+    }
+11
+​
+12
+    Request getHead (){
+13
+        return head;a
+14
+    }
+15
+​
+16
+    Request searchId (String id) {
+17
+        Request walker = head;
+18
+        Request ans = null ;
+19
+        while (walker != null) {
+20
+            if (walker.getID().equals(id)) {
+21
+                ans =  walker;
+22
+            }
+23
+            walker = walker.next;
+24
+        }
+25
+        return ans;
+26
+    }
+27
+​
+28
+    Request searchPriority(double priority){
+29
+        Request walker = head;
+30
+        Request ans = null;
+31
+        while (walker != null) {
+32
+            if (walker.getPriority() == priority)
+33
+            {
+34
+                ans = walker;
+35
+            }
+36
+            walker = walker.next;
+37
+​
+38
+        }
+39
+        return ans;
+40
+    }
+41
+​
+42
+    void readFile(){
+43
+​
+44
+        //read line by line
+45
+        //use split(" ") , which creates an array index 0 will be the id etc
             linkedlist += temp.toString();
             temp = temp.next;
 
