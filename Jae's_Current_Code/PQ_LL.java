@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import  java.util.*;
+import java.io.*;
 
 public class PQ_LL {
 
@@ -45,6 +43,7 @@ public class PQ_LL {
 
         //read line by line
         //use split(" ") , which creates an array index 0 will be the id etc
+        System.out.println("start");
 
         BufferedReader reader = null;
         try {
@@ -55,18 +54,17 @@ public class PQ_LL {
             Request node;
             while((currentLine = reader.readLine()) != null){
 
-
-
                 if(count == 0 ){
                     count++;
                 }
                 else {
                     String[] currentLineArr = currentLine.split(" ");
                     Request newRe = new Request((currentLineArr[0]), Long.parseLong(currentLineArr[1]), Double.valueOf(currentLineArr[2]));
+
                     sortedInsert(newRe);
 
-                }
 
+                }
 
             }
         }
@@ -83,6 +81,25 @@ public class PQ_LL {
         newR.next = head;
         head = newR;
     }
+
+    /**
+     * This method add newR at the last position of the linked list.
+     * @param newR takes a Request object
+     */
+    public void addLast(Request newR){
+        if(head == null){
+            addFirst(newR);
+        }else{
+            tVrsr = head;
+            while(tVrsr.next != null){
+                tVrsr = tVrsr.next;
+            }
+            newR.next = tVrsr.next;
+            tVrsr.next = newR;
+
+        }
+    }
+
 
     Request sortedInsert(Request temp){
         //for this to work ll must be already in order
@@ -116,17 +133,36 @@ public class PQ_LL {
         // this will accounts for the arrivaltimes and insert at the right places after looking at all the arrivaltimes that has the same priorities
        if(temp.getPriority() == current.getPriority() ){
            // current.prio is equal to temp.prio
-           while(current != null && temp.getPriority() == current.getPriority()&&temp.getArrivalTime()>current.getArrivalTime()){
+           while(current.next != null && temp.getPriority() == current.getPriority()&&temp.getArrivalTime()>current.getArrivalTime()){
+               //curr becomes null here
                current= current.next;
                count++;
            }
+           //insert after curr
+           //if arrivaltime is the largest in the same priority nodes
+           if(temp.getPriority() != current.getPriority()){
+              temp.next = current.next;
+              current.next = temp;
+              return head;
+           }
+           else if( temp.getArrivalTime()<current.getArrivalTime()){
+               //when loop ends curr.arrival is greater than temp.arrival
+               //so insert temp before curr bc temp.arrival is less then curr.arrival
 
-           //when loop ends curr.arrival is greater than temp.arrival
-           //so insert temp before curr bc temp.arrival is less then curr.arrival
+               if(current==head){
+                addFirst(temp);
+                return head;
+               }
+               temp.next = current;
 
-           temp.next = current;
-           getNode(count - 1).next = temp;
-           return head;
+               getNode(count - 1).next = temp;
+               return head;
+           }
+           else if(temp.getArrivalTime()>current.getArrivalTime()){
+              temp.next = current.next;
+              current.next = temp;
+              return head;
+           }
 
        }
 
@@ -138,7 +174,7 @@ public class PQ_LL {
           return head;
        }
 
-
+return head;
 
         }
 
@@ -230,26 +266,8 @@ public class PQ_LL {
         }
         return linkedlist;
     }
-    void traverse(){
-        tVrsr = head;
-        while(tVrsr.next != null){
-            tVrsr = tVrsr.next;
-        }
-    }
 
 
-    /**
-     * This method add newR at the last position of the linked list.
-     * @param newR takes a Request object
-     */
-    public void addLast(Request newR){
-        if(head == null){
-            addFirst(newR);
-        }else{
-            traverse();
-            tVrsr.next = newR;
-        }
-    }
 
     int length() {
         int count = 0;
