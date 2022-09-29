@@ -53,17 +53,20 @@ public class PQ_LL {
             int count = 0 ;
             int nOfNodes =0 ;
             Request node;
-            System.out.println();
             while((currentLine = reader.readLine()) != null){
+
+
+
                 if(count == 0 ){
                     count++;
-                    continue;
                 }
                 else {
                     String[] currentLineArr = currentLine.split(" ");
                     Request newRe = new Request((currentLineArr[0]), Long.parseLong(currentLineArr[1]), Double.valueOf(currentLineArr[2]));
-                    addLast(newRe);
+                    sortedInsert(newRe);
+
                 }
+
 
             }
         }
@@ -71,117 +74,6 @@ public class PQ_LL {
         }
     }
 
-// doesnt work
-    Request sortLinkedList(){
-        //string unique id ,long arrival time,double priority
-        //if two nodes have same priority then look at arrival time
-        //sorting to ascending order
-        Request curr = head;
-        Request currNext = null;
-        Request temp = null ;
-
-        if( head == null){
-            return head;
-        }
-        else {
-
-            while (curr != null) {
-                currNext = curr.next;
-
-                while (currNext != null) {
-
-                    //if node before is bigger than next
-                    if (curr.getPriority() < currNext.getPriority()) {
-
-                        //swap the nodes
-                        swap(getIndexOfNode(curr.getPriority(),curr.getArrivalTime()),getIndexOfNode(currNext.getPriority(),currNext.getArrivalTime()));
-                        System.out.println("swapping pt one ");
-
-
-                    }
-
-                    //accounts for if there are two nodes with same priority
-                    else if (curr.getPriority() == currNext.getPriority()) {
-
-                        //look at arrival time
-                        if (curr.getArrivalTime() < currNext.getArrivalTime()) {
-
-
-                            //swap the nodes
-                            swap(getIndexOfNode(curr.getPriority(),curr.getArrivalTime()),getIndexOfNode(currNext.getPriority(),currNext.getArrivalTime()));
-                            System.out.println("swapping pt two");
-
-                        }
-                    }
-                    //iterates next by one
-                    currNext = currNext.next;
-                }
-                //iterates curr by one
-                curr = curr.next;
-            }
-
-        }
-        return head;
-
-    }
-
-    //issue 100 102 101 , 102 is inserted
-
-    Request sortedInsert(Request temp){
-        //if head is the end then addFirst or if temp priority is greater than head priority addFirst
-       if(head == null || temp.getPriority()>head.getPriority()  ){
-           addFirst(temp);
-           return head;
-       }
-
-       Request current = head;
-       int count =0 ;
-       //constantly checks only if temp priority is less than curr priority
-       while(current != null && temp.getPriority() < current.getPriority() ){
-           current = current.next;
-           count++;
-       }
-
-       //when while loop ends current is less than temp.getPrority()
-       // also when the two priorities are equal the loop ends
-       if(temp.getPriority() == current.getPriority() && temp.getArrivalTime()<current.getArrivalTime()){
-               temp.next = current;
-               getNode(count-1).next = temp;
-
-               return head;
-       }
-       else if(temp.getPriority() == current.getPriority() && temp.getArrivalTime()>current.getArrivalTime()){
-           //inserting after curr
-           //temp pointer points to node after curr
-           temp.next = getNode(count+1);
-           //curr pointer points to temp
-           current.next = temp ;
-           return head;
-       }
-
-           temp.next = current;
-           getNode(count - 1).next = temp;
-
-       return head;
-    }
-
-    Request insert(int insertIndex, Request n){
-        if (insertIndex >= 1 ){
-            //before becomes the node before
-            Request before = getNode(insertIndex-1);
-            Request curr = getNode(insertIndex);
-            n.next = curr;
-            before.next = n;
-
-            return head;
-
-        }
-        else{
-            addFirst(n);
-            return head;
-
-        }
-    }
     /**
      * This method adds newR as the first position of the linked list.
      * @param newR takes a Request object
@@ -191,6 +83,65 @@ public class PQ_LL {
         newR.next = head;
         head = newR;
     }
+
+    Request sortedInsert(Request temp){
+        //for this to work ll must be already in order
+        //if head is the end then addFirst or if temp priority is greater than head priority addFirst
+       if(head == null || temp.getPriority()>head.getPriority()  ){
+           addFirst(temp);
+           return head;
+       }
+
+       Request current = head;
+       int count = 0 ;
+
+       //loop ends when temp.prio is larger than current.prio or its equal
+       //if linkedlist is sorted then current will equal null when the loop ends
+       while(current != null && temp.getPriority() < current.getPriority() ){
+           current = current.next;
+           count++ ;
+       }
+
+       //this gets triggered if list is sorted and add to end
+       if(current== null){
+          addLast(temp);
+          //reset counter
+          count = 0 ;
+          //assign current to head. reset
+          current = head;
+          return head;
+       }
+
+       //if temp.prio and curr.prio are equal this gets triggeredisplayNoded
+        // this will accounts for the arrivaltimes and insert at the right places after looking at all the arrivaltimes that has the same priorities
+       if(temp.getPriority() == current.getPriority() ){
+           // current.prio is equal to temp.prio
+           while(current != null && temp.getPriority() == current.getPriority()&&temp.getArrivalTime()>current.getArrivalTime()){
+               current= current.next;
+               count++;
+           }
+
+           //when loop ends curr.arrival is greater than temp.arrival
+           //so insert temp before curr bc temp.arrival is less then curr.arrival
+
+           temp.next = current;
+           getNode(count - 1).next = temp;
+           return head;
+
+       }
+
+       //if temp and curr not equal then insert temp before curr
+       else{
+            getNode(count-1).next = temp;
+            temp.next = current;
+
+          return head;
+       }
+
+
+
+        }
+
 
     //display ll
     void display(){
@@ -232,21 +183,7 @@ public class PQ_LL {
 
 
 
-
-    void swap(int x, int y ){
-        //x =y ,y = x
-        //call node from index
-        Request tempX = getNode(x);
-        Request tempY = getNode(y);
-
-        add(y,tempX);
-        delete(y+1);
-
-        add(x,tempY);
-        delete((x+1));
-
-    }
-    /**
+   /**
      * This version of this method adds newR at the index param
      * @param index takes an int
      * @param newR takes a Request object
@@ -321,23 +258,6 @@ public class PQ_LL {
             count++;
         }
         return count;
-    }
-
-    /**
-     * This version of this method appends newR to the linked list using the addLast method.
-     * @param newR Takes a Request object
-     */
-    public void add(Request newR){
-        addLast(newR);
-    }
-
-
-
-    //serving request
-    //display curr request to serve and delete node
-    void serveRequest(int x){
-        getNode(x).displayNode();
-        delete(x);
     }
 
 
